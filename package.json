@@ -35,7 +35,6 @@
   "author": "Matthew Rowland (https://github.com/mathhulk/)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mathhulk/astro-bundle-islands.git",
-    "directory": "apps/create-spectra"
+    "url": "git+https://github.com/mathhulk/astro-bundle-islands.git"
   }
 }
