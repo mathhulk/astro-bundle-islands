@@ -14,7 +14,7 @@ import bundleIslands from "astro-bundle-islands";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    // Recommended for opening HTML files directly from the file system
+    // Recommended
     relativeLinks(),
 
     bundleIslands()
