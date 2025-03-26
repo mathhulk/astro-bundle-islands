@@ -28,7 +28,9 @@
   },
   "description": "Bundle Astro islands",
   "keywords": [
-    "astro-integration"
+    "astro-integration",
+    "withastro",
+    "tooling"
   ],
   "bugs": "https://github.com/mathhulk/astro-bundle-islands/issues",
   "license": "MIT",
