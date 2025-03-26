@@ -1,13 +1,11 @@
 {
   "name": "astro-bundle-islands",
-  "private": true,
-  "description": "Bundle Astro islands",
-  "keywords": [
-    "astro-integration"
-  ],
-  "version": "0.0.1",
+  "version": "0.0.1-beta.0",
   "type": "module",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./dist/index.js"
   },
@@ -27,5 +25,17 @@
   },
   "dependencies": {
     "@types/node": "^22.13.13"
+  },
+  "description": "Bundle Astro islands",
+  "keywords": [
+    "astro-integration"
+  ],
+  "bugs": "https://github.com/mathhulk/astro-bundle-islands/issues",
+  "license": "MIT",
+  "author": "Matthew Rowland (https://github.com/mathhulk/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathhulk/astro-bundle-islands.git",
+    "directory": "apps/create-spectra"
   }
 }
