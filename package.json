@@ -1,7 +1,11 @@
 {
   "name": "astro-bundle-islands",
   "private": true,
-  "version": "0.0.0",
+  "description": "Bundle Astro islands",
+  "keywords": [
+    "astro-integration"
+  ],
+  "version": "0.0.1",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
