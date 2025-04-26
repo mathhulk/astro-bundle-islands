@@ -3,6 +3,8 @@ import fs from "fs";
 import crypto from "crypto";
 import { AstroIntegrationLogger } from "astro";
 
+type Dependency = [string, string, boolean];
+
 /**
  * Convert an export statement to a return statement
  */
@@ -39,17 +41,26 @@ const convertExportToReturn = (js: string) => {
 const convertImportToMockImport = (
   dir: URL,
   logger: AstroIntegrationLogger,
-  dependencies: [string, string][],
+  dependencies: Dependency[],
   js: string
 ) => {
-  const regex = /import\s*{\s*([^}]+)\s*}\s*from\s*['"]([^'"]+)['"]/;
+  const regex = /import\s*(?:{\s*([^}]+)\s*}\s*from\s*)?['"]([^'"]+)['"]/;
 
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(js)) !== null) {
+    const standalone = match[1] === undefined;
+
     const name = path.basename(match[2]);
 
-    processReference(dir, logger, dependencies, name);
+    processReference(dir, logger, dependencies, name, standalone);
+
+    // Standalone references are deduplicated
+    if (standalone) {
+      js = js.replace(match[0], "");
+
+      continue;
+    }
 
     const imports = match[1].split(",").map((item) => item.trim());
 
@@ -81,8 +92,9 @@ const convertImportToMockImport = (
 const processReference = (
   dir: URL,
   logger: AstroIntegrationLogger,
-  dependencies: [string, string][],
-  filePath: string
+  dependencies: Dependency[],
+  filePath: string,
+  standalone = false
 ) => {
   const name = path.basename(filePath);
 
@@ -100,7 +112,7 @@ const processReference = (
   js = convertImportToMockImport(dir, logger, dependencies, js);
   js = convertExportToReturn(js);
 
-  dependencies.push([name, js]);
+  dependencies.push([name, js, standalone]);
 };
 
 /**
@@ -145,7 +157,7 @@ const processAsset = (
   }
 
   // Manually bundle dependencies
-  const dependencies: [string, string][] = [];
+  const dependencies: Dependency[] = [];
 
   for (const reference of references) {
     processReference(dir, logger, dependencies, reference);
@@ -157,7 +169,13 @@ const processAsset = (
   let bundle = "";
 
   for (const index in dependencies) {
-    const [name, js] = dependencies[index];
+    const [name, js, standalone] = dependencies[index];
+
+    if (standalone) {
+      bundle += `// ${name}\n${js}\n\n`;
+
+      continue;
+    }
 
     bundle += `// ${name}\nconst __import${index} = (() => {${js}})();\n\n`;
   }

@@ -1,6 +1,6 @@
 {
   "name": "astro-bundle-islands",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
