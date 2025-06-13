@@ -184,9 +184,13 @@ const processAsset = (
   bundle +=
     "const __imports = {" +
     dependencies
-      .map(([name], index) => {
-        return `"${name}": __import${index}`;
-      })
+      .reduce((acc, [name, _, standalone], index) => {
+        if (standalone) return acc;
+
+        acc.push(`"${name}": __import${index}`);
+
+        return acc;
+      }, [] as string[])
       .join(",") +
     "};\n";
 

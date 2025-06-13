@@ -1,6 +1,6 @@
 {
   "name": "astro-bundle-islands",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
@@ -10,16 +10,13 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "tsup src/index.ts --format esm --dts --sourcemap"
   },
   "devDependencies": {
-    "astro": "^5.5.4",
-    "typescript": "~5.7.2",
-    "vite": "^6.2.0",
-    "vite-plugin-dts": "^4.5.3",
-    "@types/node": "^22.13.13"
+    "@types/node": "^24.0.1",
+    "astro": "^5.9.2",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3"
   },
   "peerDependencies": {
     "astro": "^5.5.4"
